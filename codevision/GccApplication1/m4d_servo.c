@@ -11,7 +11,7 @@
 #include "m4d_servo.h"
 
 
-// Коррекция значение АЦП для датчика натяжения 
+// РљРѕСЂСЂРµРєС†РёСЏ Р·РЅР°С‡РµРЅРёРµ РђР¦Рџ РґР»СЏ РґР°С‚С‡РёРєР° РЅР°С‚СЏР¶РµРЅРёСЏ 
 int left_tension_servo_correction = 0;
 
 uint16_t tension_sensor_center_position = 512;
@@ -20,7 +20,7 @@ uint16_t tension_sensor_second_position = 120;
 char trololo[10] = "trololo";
 
 /*
-  Инициализация
+  РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ
 */
 void m4d_servo_init()
 {
@@ -152,16 +152,16 @@ void m4d_servo_init()
 	servo_list[SERVO_RIGHT_TENSION].rewind_angle = left_min;
 	servo_list[SERVO_RIGHT_TENSION].pause_angle = left_without;
 	
-	// Настройка пинов для клавиатуры
+	// РќР°СЃС‚СЂРѕР№РєР° РїРёРЅРѕРІ РґР»СЏ РєР»Р°РІРёР°С‚СѓСЂС‹
 	PORTD |= (1 << REWIND_INTERRUPT_PIN);
 	PORTC |= (1 << REWIND_ADC_PIN);
 	DDRD &= ~(1 << REWIND_INTERRUPT_PIN);
 
-	// настройка прерывания для клавиатуры
-	EIMSK |= (1 << INT0); // прерывание на ИНТ0
-	MCUCR |= (1 << ISC01); // прерывание по спаду ИНТ0
+	// РЅР°СЃС‚СЂРѕР№РєР° РїСЂРµСЂС‹РІР°РЅРёСЏ РґР»СЏ РєР»Р°РІРёР°С‚СѓСЂС‹
+	EIMSK |= (1 << INT0); // РїСЂРµСЂС‹РІР°РЅРёРµ РЅР° РРќРў0
+	MCUCR |= (1 << ISC01); // РїСЂРµСЂС‹РІР°РЅРёРµ РїРѕ СЃРїР°РґСѓ РРќРў0
 	
-	// Настройка шим
+	// РќР°СЃС‚СЂРѕР№РєР° С€РёРј
 	OCR1A = 20000;
 	TCCR1A = 0;
 	TCCR1B |= (1 << WGM12);	
@@ -171,7 +171,7 @@ void m4d_servo_init()
 }
 
 /*
-  Запуск сервоприводов
+  Р—Р°РїСѓСЃРє СЃРµСЂРІРѕРїСЂРёРІРѕРґРѕРІ
 */
 void m4d_servo_start()
 {
@@ -179,13 +179,13 @@ void m4d_servo_start()
 	TCCR1B |= (1 << CS11);
 	TIMSK1 |= (1 << OCIE1A);
 	
-	// Устанавливаем PB1,PB2,PB3,PB4 как выход
+	// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј PB1,PB2,PB3,PB4 РєР°Рє РІС‹С…РѕРґ
 	SERVO_DDR |= (1 << TENSION_SERVO_LEFT_PIN);
 	SERVO_DDR |= (1 << REWIND_SERVO_PIN);
 	SERVO_DDR |= (1 << PLAY_SERVO_PIN);
 	SERVO_DDR |= (1 << TENSION_SERVO_RIGHT_PIN);
 	
-	// Без подтягивающих резисторов
+	// Р‘РµР· РїРѕРґС‚СЏРіРёРІР°СЋС‰РёС… СЂРµР·РёСЃС‚РѕСЂРѕРІ
 	servo_list[SERVO_LEFT_TENSION].port &= ~(1 <<  servo_list[SERVO_LEFT_TENSION].port);
 	SERVO_PORT &= ~(1 << REWIND_SERVO_PIN);
 	SERVO_PORT &= ~(1 << PLAY_SERVO_PIN);
@@ -194,7 +194,7 @@ void m4d_servo_start()
 
  
 /*
-  Остановить работу сервоприводов
+  РћСЃС‚Р°РЅРѕРІРёС‚СЊ СЂР°Р±РѕС‚Сѓ СЃРµСЂРІРѕРїСЂРёРІРѕРґРѕРІ
 */
 void m4d_servo_stop()
 {
@@ -204,7 +204,7 @@ void m4d_servo_stop()
 
 
 /*
-  "ВОСПРОИЗВЕДЕНИЕ"
+  "Р’РћРЎРџР РћРР—Р’Р•Р”Р•РќРР•"
 */
 void m4d_play()
 {
@@ -217,7 +217,7 @@ void m4d_play()
 
 
 /*
-  "ПАУЗА"
+  "РџРђРЈР—Рђ"
 */
 void m4d_pause()
 {
@@ -229,7 +229,7 @@ void m4d_pause()
 
 
 /*
-  ПЕРЕМОТКА "ВПЕРЕД"
+  РџР•Р Р•РњРћРўРљРђ "Р’РџР•Р Р•Р”"
 */
 void m4d_forward()
 {
@@ -242,7 +242,7 @@ void m4d_forward()
 }
 
 /*
-  ПЕРЕМОТКА "НАЗАД"
+  РџР•Р Р•РњРћРўРљРђ "РќРђР—РђР”"
 */
 void m4d_rewind()
 {
@@ -257,7 +257,7 @@ void m4d_rewind()
 
 
 /*
-  "СТОП"
+  "РЎРўРћРџ"
 */
 void m4d_stop()
 {
@@ -276,7 +276,7 @@ unsigned char viaOne = 0;
 unsigned char servoNum = 0;
 
 /*
-  "Прерывание по таймеру 1"
+  "РџСЂРµСЂС‹РІР°РЅРёРµ РїРѕ С‚Р°Р№РјРµСЂСѓ 1"
 */
 ISR(TIMER1_COMPA_vect) 
 {
@@ -343,10 +343,10 @@ uint16_t pr_adc_val;
 
 
 /*
-  "Прерывание нажатию кнопки"
+  "РџСЂРµСЂС‹РІР°РЅРёРµ РЅР°Р¶Р°С‚РёСЋ РєРЅРѕРїРєРё"
 */
 ISR(INT0_vect){
-	// Антидребезг по таймеру
+	// РђРЅС‚РёРґСЂРµР±РµР·Рі РїРѕ С‚Р°Р№РјРµСЂСѓ
 	if(int0ButtonPress == 1) return;
 	int0ButtonPress = 1;
 	
@@ -402,7 +402,7 @@ ISR(INT0_vect){
 }
 
 /*
-  Выбор типа настройки в программном режиме
+  Р’С‹Р±РѕСЂ С‚РёРїР° РЅР°СЃС‚СЂРѕР№РєРё РІ РїСЂРѕРіСЂР°РјРјРЅРѕРј СЂРµР¶РёРјРµ
 */
 char program_mode_change(int program_mode)
 {
@@ -417,12 +417,12 @@ char program_mode_change(int program_mode)
 }
 
 /*
-  Переключение значений настроек в программном режиме
+  РџРµСЂРµРєР»СЋС‡РµРЅРёРµ Р·РЅР°С‡РµРЅРёР№ РЅР°СЃС‚СЂРѕРµРє РІ РїСЂРѕРіСЂР°РјРјРЅРѕРј СЂРµР¶РёРјРµ
 */
 void program_mode_value_change(int program_mode, char up)
 {
 	
-	// Настройка центрального сенсора натяжения
+	// РќР°СЃС‚СЂРѕР№РєР° С†РµРЅС‚СЂР°Р»СЊРЅРѕРіРѕ СЃРµРЅСЃРѕСЂР° РЅР°С‚СЏР¶РµРЅРёСЏ
 	if(program_mode == PR_MODE_TENSION_MIDDLE){
 		lcd_print(0, 1, "old:");
 		lcd_num_to_str(4, 1, EEPROM_read_word(TENSION_SENSOR_MIDDLE_EPROM_ADDR), 4);
@@ -430,7 +430,7 @@ void program_mode_value_change(int program_mode, char up)
 		pr_adc_val = adc_sensor_tension_center_read();
 		lcd_num_to_str(12, 1, pr_adc_val, 4);
 		
-	// Настройка вспомогательного сенсора натяжения	
+	// РќР°СЃС‚СЂРѕР№РєР° РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅРѕРіРѕ СЃРµРЅСЃРѕСЂР° РЅР°С‚СЏР¶РµРЅРёСЏ	
 	} else if(program_mode == PR_MODE_TENSION_SECOND){
 		lcd_print(0, 1, "old:");
 		lcd_num_to_str(4, 1, EEPROM_read_word(TENSION_SENSOR_SECOND_EPROM_ADDR), 4);
@@ -448,7 +448,7 @@ void program_mode_value_change(int program_mode, char up)
 }
 
 /*
-  Сохранение настроек в программном режиме
+  РЎРѕС…СЂР°РЅРµРЅРёРµ РЅР°СЃС‚СЂРѕРµРє РІ РїСЂРѕРіСЂР°РјРјРЅРѕРј СЂРµР¶РёРјРµ
 */
 void program_mode_value_save(int program_mode)
 {
@@ -463,7 +463,7 @@ void program_mode_value_save(int program_mode)
 }
 
 /*
-  Перемещение сервопривода во время настройки
+  РџРµСЂРµРјРµС‰РµРЅРёРµ СЃРµСЂРІРѕРїСЂРёРІРѕРґР° РІРѕ РІСЂРµРјСЏ РЅР°СЃС‚СЂРѕР№РєРё
 */
 void program_mode_servo_move(char up, int servo_num)
 {
@@ -476,7 +476,7 @@ void program_mode_servo_move(char up, int servo_num)
 }
 
 /*
-  Установка натяжения ленты по датчику натяжения
+  РЈСЃС‚Р°РЅРѕРІРєР° РЅР°С‚СЏР¶РµРЅРёСЏ Р»РµРЅС‚С‹ РїРѕ РґР°С‚С‡РёРєСѓ РЅР°С‚СЏР¶РµРЅРёСЏ
 */
 void setTensionServoPositionByAdc() 
 {
@@ -489,7 +489,7 @@ void setTensionServoPositionByAdc()
 	///lcd_num_to_str(0,1,hight,3);
 	//USART_send_2_int_var("Center", adc_result.tension_middle, "Second", adc_result.tension_hight);
 	
-	// Если недостаточное натяжение
+	// Р•СЃР»Рё РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕРµ РЅР°С‚СЏР¶РµРЅРёРµ
 	if(hight > 120){
 		left_tension_servo_correction = left_tension_servo_correction - LEFT_TENSION_STEP_CORRECTION;
 		if(left_tension_servo_correction < LEFT_TENSION_MIN_CORRECTION){
@@ -512,13 +512,13 @@ unsigned char middleTensionAdcMeasured = 0;
 unsigned char measuredNum = 0;
 
 /*
-  Произвести измерения на датчике натяжения
+  РџСЂРѕРёР·РІРµСЃС‚Рё РёР·РјРµСЂРµРЅРёСЏ РЅР° РґР°С‚С‡РёРєРµ РЅР°С‚СЏР¶РµРЅРёСЏ
 */
 void tension_sensor_measure()
 {
 
 	if(measure_divider == 10){
-		// Сброс int0 кнопки
+		// РЎР±СЂРѕСЃ int0 РєРЅРѕРїРєРё
 		resetInt0Button();
 		measure_divider = 0;
 		
@@ -530,22 +530,22 @@ void tension_sensor_measure()
 	}
 	measure_divider++;
 	
-	// Если не нужно автонатяжение выходим
+	// Р•СЃР»Рё РЅРµ РЅСѓР¶РЅРѕ Р°РІС‚РѕРЅР°С‚СЏР¶РµРЅРёРµ РІС‹С…РѕРґРёРј
 	if(servo_list[SERVO_LEFT_TENSION].auto_angle != 1){
 		measuredNum = 0;
 		middleTensionAdcMeasured = 0;
 		return;
 	}
 	
-	// Получаем значения от АЦП
+	// РџРѕР»СѓС‡Р°РµРј Р·РЅР°С‡РµРЅРёСЏ РѕС‚ РђР¦Рџ
 	struct adc adc_result;
 	adc_result = get_adc_result();
 
-	// При запросе к ацп через m4d_adc_center_tension_pin_read() будет произведено измерение. Результат записан в структуру adc_result.
-	// Будет произведено столько измерений сколько задано в adc_result.count_measure
-	// Прежде чем производить следующее измерение - ждем, что прошло предыдущее
-	// Первое измерение пропускаем
-	// Для датчика натяжения делаем сначала набор измерений для одного фоторезистора, затем для второго, высчитываем среднее
+	// РџСЂРё Р·Р°РїСЂРѕСЃРµ Рє Р°С†Рї С‡РµСЂРµР· m4d_adc_center_tension_pin_read() Р±СѓРґРµС‚ РїСЂРѕРёР·РІРµРґРµРЅРѕ РёР·РјРµСЂРµРЅРёРµ. Р РµР·СѓР»СЊС‚Р°С‚ Р·Р°РїРёСЃР°РЅ РІ СЃС‚СЂСѓРєС‚СѓСЂСѓ adc_result.
+	// Р‘СѓРґРµС‚ РїСЂРѕРёР·РІРµРґРµРЅРѕ СЃС‚РѕР»СЊРєРѕ РёР·РјРµСЂРµРЅРёР№ СЃРєРѕР»СЊРєРѕ Р·Р°РґР°РЅРѕ РІ adc_result.count_measure
+	// РџСЂРµР¶РґРµ С‡РµРј РїСЂРѕРёР·РІРѕРґРёС‚СЊ СЃР»РµРґСѓСЋС‰РµРµ РёР·РјРµСЂРµРЅРёРµ - Р¶РґРµРј, С‡С‚Рѕ РїСЂРѕС€Р»Рѕ РїСЂРµРґС‹РґСѓС‰РµРµ
+	// РџРµСЂРІРѕРµ РёР·РјРµСЂРµРЅРёРµ РїСЂРѕРїСѓСЃРєР°РµРј
+	// Р”Р»СЏ РґР°С‚С‡РёРєР° РЅР°С‚СЏР¶РµРЅРёСЏ РґРµР»Р°РµРј СЃРЅР°С‡Р°Р»Р° РЅР°Р±РѕСЂ РёР·РјРµСЂРµРЅРёР№ РґР»СЏ РѕРґРЅРѕРіРѕ С„РѕС‚РѕСЂРµР·РёСЃС‚РѕСЂР°, Р·Р°С‚РµРј РґР»СЏ РІС‚РѕСЂРѕРіРѕ, РІС‹СЃС‡РёС‚С‹РІР°РµРј СЃСЂРµРґРЅРµРµ
 	if(middleTensionAdcMeasured == 0){
 		if(adc_result.tension_middle_complete <= adc_result.count_measure ){
 			if(adc_result.tension_middle_complete > measuredNum || measuredNum == 0){
@@ -579,7 +579,7 @@ void tension_sensor_measure()
 	//lcd_num_to_str(0,1,adc_result.tension_hight_complete,4);
 	//lcd_num_to_str(0,0,adc_result.tension_middle_complete,4);
 	//_delay_ms(200);
-	// После того как есть измерения для обоих фотодиодов вызовем setTensionServoPositionByAdc()
+	// РџРѕСЃР»Рµ С‚РѕРіРѕ РєР°Рє РµСЃС‚СЊ РёР·РјРµСЂРµРЅРёСЏ РґР»СЏ РѕР±РѕРёС… С„РѕС‚РѕРґРёРѕРґРѕРІ РІС‹Р·РѕРІРµРј setTensionServoPositionByAdc()
 	if(adc_result.tension_hight_complete == (adc_result.count_measure+1) && adc_result.tension_middle_complete == (adc_result.count_measure+1)){
 		setTensionServoPositionByAdc();
 		middleTensionAdcMeasured = 0;

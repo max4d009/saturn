@@ -1,5 +1,5 @@
 /*
- * m4d_adc.с
+ * m4d_adc.СЃ
  *
  * Created: 02.12.2020 1:24:46
  *  Author: m4d
@@ -7,7 +7,7 @@
 
 #include "m4d_adc.h"
 
-// Возвращает структуру с результами ацп
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚СЂСѓРєС‚СѓСЂСѓ СЃ СЂРµР·СѓР»СЊС‚Р°РјРё Р°С†Рї
 struct adc get_adc_result()
 {
     return adc_result;
@@ -23,27 +23,27 @@ void m4d_adc_reset_result()
 	adc_result.count_measure = 2;
 }
 
-// Инициализация АЦП:
+// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РђР¦Рџ:
 void m4d_adc_init_8(void) 
 {
     m4d_adc_reset_result();
 	
-	// Включить АЦП
+	// Р’РєР»СЋС‡РёС‚СЊ РђР¦Рџ
 	ADCSRA |= (1 << ADEN);
-	// Частота дискретизации 8
+	// Р§Р°СЃС‚РѕС‚Р° РґРёСЃРєСЂРµС‚РёР·Р°С†РёРё 8
 	ADCSRA |= (1 << ADPS0);
 	ADCSRA |= (1 << ADPS1);
 	ADCSRA &= ~(1 << ADPS2);
 	
-	// Опорное напряжение по VCC 5v
+	// РћРїРѕСЂРЅРѕРµ РЅР°РїСЂСЏР¶РµРЅРёРµ РїРѕ VCC 5v
 	ADMUX |= (1 << REFS0);
 	ADMUX &= ~(1 << REFS1);
 	
-	// Разрешить прерывания
+	// Р Р°Р·СЂРµС€РёС‚СЊ РїСЂРµСЂС‹РІР°РЅРёСЏ
 	ADCSRA |= (1 << ADIE);
 }
 
-// Считываем с ADC0
+// РЎС‡РёС‚С‹РІР°РµРј СЃ ADC0
 void m4d_admux_keyboard()
 {
 	ADMUX &= ~(1 << MUX0);
@@ -52,7 +52,7 @@ void m4d_admux_keyboard()
 	ADMUX &= ~(1 << MUX3);
 }
 
-// Считываем с ADC1
+// РЎС‡РёС‚С‹РІР°РµРј СЃ ADC1
 void m4d_admux_tension_low()
 {
 	ADMUX |=  (1 << MUX0);
@@ -61,7 +61,7 @@ void m4d_admux_tension_low()
 	ADMUX &= ~(1 << MUX3);
 }
 
-// Считываем с ADC2
+// РЎС‡РёС‚С‹РІР°РµРј СЃ ADC2
 void m4d_admux_tension_center()
 {
 	//if (ADMUX != 0x42){
@@ -72,7 +72,7 @@ void m4d_admux_tension_center()
 	//}
 }
 
-// Считываем с ADC3
+// РЎС‡РёС‚С‹РІР°РµРј СЃ ADC3
 void m4d_admux_tension_hight()
 {
 	//if (ADMUX != 0x43){
@@ -83,16 +83,16 @@ void m4d_admux_tension_hight()
 	//}
 }
 
-// Считать показания с ADC
+// РЎС‡РёС‚Р°С‚СЊ РїРѕРєР°Р·Р°РЅРёСЏ СЃ ADC
 uint16_t m4d_adc_read()
 {
-	// Сбрасываем ADIF в 0
+	// РЎР±СЂР°СЃС‹РІР°РµРј ADIF РІ 0
 	//ADCSRA &= ~(1 << ADIF);
 	
-	// Включаем АЦП
+	// Р’РєР»СЋС‡Р°РµРј РђР¦Рџ
 	ADCSRA |= (1 << ADSC);
 	
-	// Производим измерение
+	// РџСЂРѕРёР·РІРѕРґРёРј РёР·РјРµСЂРµРЅРёРµ
 	while(ADCSRA & (1 << ADSC));
 	
 	return ADC;	
@@ -110,7 +110,7 @@ void m4d_adc_second_tension_pin_read()
 	ADCSRA |= (1 << ADSC);
 }
 
-// Чтение канала АЦП для клавиатуры
+// Р§С‚РµРЅРёРµ РєР°РЅР°Р»Р° РђР¦Рџ РґР»СЏ РєР»Р°РІРёР°С‚СѓСЂС‹
 uint16_t m4d_adc_keyboard_read(int min, int max) 
 {
     m4d_admux_keyboard();
@@ -134,7 +134,7 @@ uint16_t m4d_adc_keyboard_read(int min, int max)
 }
 
 
-// Чтение канала АЦП для центрального сенсора натяжения
+// Р§С‚РµРЅРёРµ РєР°РЅР°Р»Р° РђР¦Рџ РґР»СЏ С†РµРЅС‚СЂР°Р»СЊРЅРѕРіРѕ СЃРµРЅСЃРѕСЂР° РЅР°С‚СЏР¶РµРЅРёСЏ
 uint16_t adc_sensor_tension_center_read()
 {
 	m4d_admux_tension_center();
@@ -157,7 +157,7 @@ uint16_t adc_sensor_tension_center_read()
 	return result;
 }
 
-// Чтение канала АЦП для второго сенсора натяжения
+// Р§С‚РµРЅРёРµ РєР°РЅР°Р»Р° РђР¦Рџ РґР»СЏ РІС‚РѕСЂРѕРіРѕ СЃРµРЅСЃРѕСЂР° РЅР°С‚СЏР¶РµРЅРёСЏ
 uint16_t adc_sensor_tension_second_read()
 {
 	m4d_admux_tension_hight();
@@ -187,14 +187,14 @@ ISR(ADC_vect)
 	cli();
 
 	if (!(ADMUX & (1 << MUX0)) && (ADMUX & (1 << MUX1)) && !(ADMUX & (1 << MUX2)) && !(ADMUX & (1 << MUX3))){
-		// Производим измерение, только если оно не первое.
-		// Только если кол-во измерений меньше чем указанно в структуре.
+		// РџСЂРѕРёР·РІРѕРґРёРј РёР·РјРµСЂРµРЅРёРµ, С‚РѕР»СЊРєРѕ РµСЃР»Рё РѕРЅРѕ РЅРµ РїРµСЂРІРѕРµ.
+		// РўРѕР»СЊРєРѕ РµСЃР»Рё РєРѕР»-РІРѕ РёР·РјРµСЂРµРЅРёР№ РјРµРЅСЊС€Рµ С‡РµРј СѓРєР°Р·Р°РЅРЅРѕ РІ СЃС‚СЂСѓРєС‚СѓСЂРµ.
 		
 		if(adc_result.tension_middle_complete > 0 && adc_result.tension_middle_complete <= adc_result.count_measure){
 			adc_result.tension_middle = adc_result.tension_middle + ADC;
 		}
 		adc_result.tension_middle_complete = adc_result.tension_middle_complete + 1;
-		// Сбрасываем ADIF в 0
+		// РЎР±СЂР°СЃС‹РІР°РµРј ADIF РІ 0
 		ADCSRA &= ~(1 << ADIF);
 		return;
 	}
@@ -205,12 +205,12 @@ ISR(ADC_vect)
 			adc_result.tension_hight = adc_result.tension_hight + ADC;	
 		}
 		adc_result.tension_hight_complete = adc_result.tension_hight_complete + 1;
-		// Сбрасываем ADIF в 0
+		// РЎР±СЂР°СЃС‹РІР°РµРј ADIF РІ 0
 		ADCSRA &= ~(1 << ADIF);
 		return;
 	}
 		
-	// Сбрасываем ADIF в 0
+	// РЎР±СЂР°СЃС‹РІР°РµРј ADIF РІ 0
 	ADCSRA &= ~(1 << ADIF);
 	
 	sei();

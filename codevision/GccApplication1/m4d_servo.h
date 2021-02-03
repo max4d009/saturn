@@ -110,7 +110,7 @@ void program_mode_value_save(int program_mode);
 void program_mode_servo_move(char up, int servo_num);
 
 
-// Общая структура для всех сервоприводов
+// РћР±С‰Р°СЏ СЃС‚СЂСѓРєС‚СѓСЂР° РґР»СЏ РІСЃРµС… СЃРµСЂРІРѕРїСЂРёРІРѕРґРѕРІ
 struct Servo {
 	int ddr;
 	int port;
@@ -129,17 +129,17 @@ struct Servo {
 	int pause_angle;
 };
 
-// Общая структура для всех настроек eprom
+// РћР±С‰Р°СЏ СЃС‚СЂСѓРєС‚СѓСЂР° РґР»СЏ РІСЃРµС… РЅР°СЃС‚СЂРѕРµРє eprom
 struct EpromConfig {
 	char *name;
 	unsigned int eeprom_addr;
 	char servo;
 };
 
-// Массив сервоприводов
+// РњР°СЃСЃРёРІ СЃРµСЂРІРѕРїСЂРёРІРѕРґРѕРІ
 struct Servo servo_list[NUM_SERVO];
 
-// Массив настроек
+// РњР°СЃСЃРёРІ РЅР°СЃС‚СЂРѕРµРє
 struct EpromConfig config_list[PR_COUNT_CONFIG];
 
 unsigned char get_servo_complete_signal();

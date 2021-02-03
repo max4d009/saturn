@@ -33,7 +33,7 @@ int main(void)
 		//m4d_i2c_send_byte(i);
 		//_delay_ms(50);
 		//i+=1;	
-		//lcd_num_to_str(5, 0, i, 4); // вывод текста.
+		//lcd_num_to_str(5, 0, i, 4); // РІС‹РІРѕРґ С‚РµРєСЃС‚Р°.
 		//lcd_num_to_str(0,0,i,5);
 		
 	
